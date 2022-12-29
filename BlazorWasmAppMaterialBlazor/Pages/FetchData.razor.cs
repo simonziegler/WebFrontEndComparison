@@ -10,10 +10,10 @@ namespace BlazorWasmAppMaterialBlazor.Pages
         private bool Grouped { get; set; }
         private string GroupedLabel => Grouped ? "Ungroup" : "Group";
 
-        protected override void OnParametersSet()
-        {
-            base.OnParametersSet();
 
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
             BuildGrid();
         }
 
@@ -25,6 +25,8 @@ namespace BlazorWasmAppMaterialBlazor.Pages
 
         private void BuildGrid()
         {
+            RenderStopwatch.Restart();
+
             ForecastsGrouped = new MBGrid_DataHelper<WeatherForecast>().PrepareGridData(
                 WeatherForecast.Data,
                 typeof(WeatherForecast).GetProperty(nameof(WeatherForecast.UniqueId)),

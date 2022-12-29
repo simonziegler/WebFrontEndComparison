@@ -7,20 +7,24 @@ namespace CSharpSharedData
     public class TimedComponentBase : ComponentBase
     {
         [Inject] private ILogger<TimedComponentBase> Logger { get; set; } = default!;
-        private readonly Stopwatch stopwatch = new();
+        protected readonly Stopwatch RenderStopwatch = new();
 
 
-        protected override void OnParametersSet()
+        protected override void OnInitialized()
         {
             // Required for the first render where ShouldRender is not called
-            stopwatch.Restart();
-            base.OnParametersSet();
+            RenderStopwatch.Restart();
+            base.OnInitialized();
         }
 
 
         protected override bool ShouldRender()
         {
-            stopwatch.Restart();
+            if (!RenderStopwatch.IsRunning)
+            {
+                RenderStopwatch.Restart();
+            }
+
             return base.ShouldRender();
         }
 
@@ -28,7 +32,8 @@ namespace CSharpSharedData
         protected override void OnAfterRender(bool firstRender)
         {
             base.OnAfterRender(firstRender);
-            Logger.LogError($"{GetType().FullName} render timing: {stopwatch.ElapsedMilliseconds:N0} ms");
+            Logger.LogError($"{GetType().FullName} render timing: {RenderStopwatch.ElapsedMilliseconds:N0} ms");
+            RenderStopwatch.Reset();
         }
     }
 }
