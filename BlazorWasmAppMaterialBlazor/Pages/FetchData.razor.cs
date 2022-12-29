@@ -5,26 +5,40 @@ namespace BlazorWasmAppMaterialBlazor.Pages
 {
     public partial class FetchData : TimedComponentBase
     {
-        private IEnumerable<KeyValuePair<string, IEnumerable<KeyValuePair<string, WeatherForecast>>>> forecastsGrouped = default!;
-        private List<MBGridColumnConfiguration<WeatherForecast>> columnConfigurations = new();
+        private IEnumerable<KeyValuePair<string, IEnumerable<KeyValuePair<string, WeatherForecast>>>> ForecastsGrouped { get; set; } = default!;
+        private List<MBGridColumnConfiguration<WeatherForecast>> ColumnConfigurations { get; set; } = new();
+        private bool Grouped { get; set; }
+        private string GroupedLabel => Grouped ? "Ungroup" : "Group";
 
-
-        protected override void OnInitialized()
+        protected override void OnParametersSet()
         {
-            forecastsGrouped = new MBGrid_DataHelper<WeatherForecast>().PrepareGridData(
+            base.OnParametersSet();
+
+            BuildGrid();
+        }
+
+        private void OnGroupClick()
+        {
+            Grouped = !Grouped;
+            BuildGrid();
+        }
+
+        private void BuildGrid()
+        {
+            ForecastsGrouped = new MBGrid_DataHelper<WeatherForecast>().PrepareGridData(
                 WeatherForecast.Data,
                 typeof(WeatherForecast).GetProperty(nameof(WeatherForecast.UniqueId)),
                 typeof(WeatherForecast).GetProperty(nameof(WeatherForecast.TemperatureC)),
                 Direction.Ascending,
                 null,
                 Direction.Ascending,
-                true,
+                Grouped,
                 typeof(WeatherForecast).GetProperty(nameof(WeatherForecast.Summary))
             );
 
-            var xxx = forecastsGrouped.Select(x => new KeyValuePair<string, List<KeyValuePair<string, WeatherForecast>>>(x.Key, x.Value.ToList())).ToList();
+            var xxx = ForecastsGrouped.Select(x => new KeyValuePair<string, List<KeyValuePair<string, WeatherForecast>>>(x.Key, x.Value.ToList())).ToList();
 
-            columnConfigurations = new()
+            ColumnConfigurations = new()
             {
                 new MBGridColumnConfiguration<WeatherForecast>(dataExpression: c => c.LastRendered, title: "Last Rendered", width: 15),
                 new MBGridColumnConfiguration<WeatherForecast>(dataExpression: c => c.Date, title: "Date", width: 10),
@@ -34,12 +48,6 @@ namespace BlazorWasmAppMaterialBlazor.Pages
             };
         }
 
-        protected override void OnParametersSet()
-        {
-            // Call this first to ensure that preparing the grouped data is included within render timing - a fair comparison with other component libraries
-            base.OnParametersSet();
 
-
-        }
     }
 }

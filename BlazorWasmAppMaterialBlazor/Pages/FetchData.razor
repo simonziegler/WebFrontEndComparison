@@ -6,9 +6,11 @@
 
 <PageTitle>Weather forecast</PageTitle>
 
-
-<MBGrid ColumnConfigurations="@columnConfigurations"
-        GroupedOrderedData="@forecastsGrouped"
+<div>
+    <MBButton Label="@GroupedLabel" @onclick="@OnGroupClick" ButtonStyle="@MBButtonStyle.ContainedRaised" />
+</div>
+<MBGrid ColumnConfigurations="@ColumnConfigurations"
+        GroupedOrderedData="@ForecastsGrouped"
         Group="true"
         HighlightSelectedRow="@true"
         KeyExpression="@(forecast => forecast.UniqueId.ToString())"
