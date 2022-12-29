@@ -2,6 +2,8 @@
 @using CSharpSharedData
 @using Syncfusion.Blazor.Grids
 
+@inherits TimedComponentBase
+
 <PageTitle>Weather forecast</PageTitle>
 
 <SfGrid DataSource="@forecasts" AllowGrouping="true" Height="400">

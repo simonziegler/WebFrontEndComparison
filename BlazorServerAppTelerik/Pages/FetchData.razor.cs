@@ -2,7 +2,7 @@ using CSharpSharedData;
 
 namespace BlazorServerAppTelerik.Pages
 {
-   public partial class FetchData
+   public partial class FetchData : TimedComponentBase
    {
       private WeatherForecast[]? forecasts;
 

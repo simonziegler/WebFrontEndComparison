@@ -2,7 +2,7 @@ using CSharpSharedData;
 
 namespace BlazorWasmAppDevExpress.Pages
 {
-   public partial class FetchData
+   public partial class FetchData : TimedComponentBase
    {
       private WeatherForecast[]? forecasts;
 

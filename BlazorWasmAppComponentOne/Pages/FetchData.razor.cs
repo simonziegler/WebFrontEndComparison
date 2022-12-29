@@ -4,7 +4,7 @@ using CSharpSharedData;
 
 namespace BlazorWasmAppComponentOne.Pages
 {
-    public partial class FetchData
+    public partial class FetchData : TimedComponentBase
     {
         FlexGrid grid;
         

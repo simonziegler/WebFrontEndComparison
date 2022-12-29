@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 
 namespace BlazorWasmAppSyncFusion.Pages
 {
-   public partial class FetchData
+   public partial class FetchData : TimedComponentBase
     {
         private WeatherForecast[]? forecasts;
 

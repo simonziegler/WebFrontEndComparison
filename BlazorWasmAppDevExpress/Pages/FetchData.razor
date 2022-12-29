@@ -3,6 +3,8 @@
 @using DevExpress.Blazor
 @inject HttpClient Http
 
+@inherits TimedComponentBase
+
 <PageTitle>Weather forecast</PageTitle>
 
 <DxDataGrid Data=@forecasts ShowGroupPanel=@true PageSize=500>

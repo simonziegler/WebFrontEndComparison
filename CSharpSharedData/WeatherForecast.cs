@@ -2,6 +2,7 @@
 
 public class WeatherForecast
 {
+   public Guid UniqueId { get; set; } = Guid.NewGuid();
    public DateTime LastRendered => DateTime.UtcNow;
    public DateTime Date { get; set; }
 

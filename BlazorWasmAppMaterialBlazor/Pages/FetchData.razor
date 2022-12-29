@@ -1,0 +1,16 @@
+﻿@page "/fetchdata"
+@using CSharpSharedData;
+@using Material.Blazor;
+
+@inherits TimedComponentBase
+
+<PageTitle>Weather forecast</PageTitle>
+
+
+<MBGrid ColumnConfigurations="@columnConfigurations"
+        GroupedOrderedData="@forecastsGrouped"
+        Group="true"
+        HighlightSelectedRow="@true"
+        KeyExpression="@(forecast => forecast.UniqueId.ToString())"
+        Measurement="@MB_Grid_Measurement.Percent"
+        TRowData="@WeatherForecast" />

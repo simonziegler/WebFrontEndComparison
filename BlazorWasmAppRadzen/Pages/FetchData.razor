@@ -2,6 +2,8 @@
 @using CSharpSharedData;
 @inject HttpClient Http
 
+@inherits TimedComponentBase
+
 <PageTitle>Weather forecast</PageTitle>
 
 <RadzenDataGrid forecasts AllowGrouping="true" PageSize="5" 
