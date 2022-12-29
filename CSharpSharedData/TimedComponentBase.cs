@@ -6,7 +6,7 @@ namespace CSharpSharedData
 {
     public class TimedComponentBase : ComponentBase
     {
-        [Inject] private ILogger<TimedComponentBase> Logger { get; set; }
+        [Inject] private ILogger<TimedComponentBase> Logger { get; set; } = default!;
         private readonly Stopwatch stopwatch = new();
 
 

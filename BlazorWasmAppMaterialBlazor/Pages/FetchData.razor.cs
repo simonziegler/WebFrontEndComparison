@@ -5,22 +5,24 @@ namespace BlazorWasmAppMaterialBlazor.Pages
 {
     public partial class FetchData : TimedComponentBase
     {
-        private List<KeyValuePair<string, IEnumerable<KeyValuePair<string, WeatherForecast>>>> forecastsGrouped = new();
-        private List<MBGridColumnConfiguration<WeatherForecast>> columnConfigurations { get; set; } = new();
+        private IEnumerable<KeyValuePair<string, IEnumerable<KeyValuePair<string, WeatherForecast>>>> forecastsGrouped = default!;
+        private List<MBGridColumnConfiguration<WeatherForecast>> columnConfigurations = new();
 
 
         protected override void OnInitialized()
         {
             forecastsGrouped = new MBGrid_DataHelper<WeatherForecast>().PrepareGridData(
                 WeatherForecast.Data,
-                typeof(WeatherForecast).GetProperty("UniqueId"),
-                typeof(WeatherForecast).GetProperty("TemperatureC"),
+                typeof(WeatherForecast).GetProperty(nameof(WeatherForecast.UniqueId)),
+                typeof(WeatherForecast).GetProperty(nameof(WeatherForecast.TemperatureC)),
                 Direction.Ascending,
                 null,
                 Direction.Ascending,
                 true,
-                typeof(WeatherForecast).GetProperty("Summary")
-            ).ToList();
+                typeof(WeatherForecast).GetProperty(nameof(WeatherForecast.Summary))
+            );
+
+            var xxx = forecastsGrouped.Select(x => new KeyValuePair<string, List<KeyValuePair<string, WeatherForecast>>>(x.Key, x.Value.ToList())).ToList();
 
             columnConfigurations = new()
             {
